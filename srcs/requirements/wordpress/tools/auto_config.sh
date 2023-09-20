@@ -28,6 +28,23 @@ else
 	wp user create --allow-root $wp_user okhiar@gmail.com --user_pass=$wp_user_pass
 
 	echo -e "\e[1;32mWordPress core installed and user created.\e[0m"
+
+
+	# ********* BONUS *********
+	# Redis connection configure
+	# Install Redis plugin
+	wp plugin install redis-cache --activate --allow-root
+
+	# # configure Redis cache
+	# # WP_REDIS_CLIENT is a configuration constant used to specify the client
+	# # library that WordPress should use to connect to a Redis server for object caching
+	wp config set --allow-root WP_REDIS_CLIENT "phpredis"
+	wp config set --allow-root WP_REDIS_HOST "redis"
+	wp config set --allow-root WP_REDIS_PORT "6379"
+	wp config set --allow-root WP_REDIS_PREFIX "wp_"
+
+	wp plugin update --all --allow-root
+	wp redis enable --allow-root
 fi
 
 # mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php

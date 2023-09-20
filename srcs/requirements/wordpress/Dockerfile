@@ -8,6 +8,10 @@ RUN apt-get update -y && apt-get upgrade -y
 
 RUN apt-get install -y vim unzip wget php7.4 php7.4-fpm php7.4-mysql mariadb-client
 
+RUN apt-get install -y php-redis
+
+RUN true
+
 RUN wget https://wordpress.org/latest.zip -P /var/www/
 
 RUN cd /var/www && unzip latest.zip && rm latest.zip
