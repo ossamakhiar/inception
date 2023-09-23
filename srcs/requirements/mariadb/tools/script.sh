@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "Starting mariadb..." 
 service mariadb start
 
 sleep 2
@@ -16,7 +17,6 @@ sleep 2
 
 # # mysqld
 
-echo "Starting mariadb..." 
 
 mysql -e "CREATE DATABASE IF NOT EXISTS \`$db_name\`;"
 mysql -e "CREATE USER IF NOT EXISTS \`$db_user\`@'localhost' IDENTIFIED BY '$db_pass';"
@@ -29,4 +29,4 @@ mysqladmin -u root -p$db_root_pass shutdown
 
 echo "database have been created..."
 
-exec mysqld_safe
+mysqld_safe

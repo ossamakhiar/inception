@@ -3,10 +3,6 @@
 mkdir -p /var/run/vsftpd/empty
 
 mkdir -p /var/www/wordpress
-# echo hello >> /var/www/html/hello.txt
-
-# cp /etc/vsftpd.conf /etc/vsftpd.conf.backup
-mv /tmp/vsftpd.conf /etc/vsftpd.conf
 
 # create a new user without password and set all the user informations to empty string
 # to avoid promping when running (general electric comprehensive operating system)

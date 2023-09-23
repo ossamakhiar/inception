@@ -2,7 +2,7 @@ FROM debian:bullseye
 
 RUN apt-get update -y
 
-RUN apt-get install -y redis-server vim
+RUN apt-get install -y redis vim
 
 COPY tools/script.sh /
 

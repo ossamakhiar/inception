@@ -2,6 +2,7 @@ version: '3'
 
 services:
   nginx:
+    image: nginx
     container_name: nginx
     build:
       context: ./requirements/nginx
@@ -11,13 +12,14 @@ services:
     volumes:
       - wordpress:/var/www/wordpress
     depends_on:
-      - wordpress
+     - wordpress
     env_file:
       - .env
     ports:
       - 443:443
     restart: on-failure
   mariadb:
+    image: mariadb
     container_name: mariadb
     build:
       context: ./requirements/mariadb
@@ -26,12 +28,11 @@ services:
       - my-net
     volumes:
       - mariadb:/var/lib/mysql
-    expose:
-      - 3306
     env_file:
       - .env
     restart: on-failure
   wordpress:
+    image: wordpress
     container_name: wordpress
     build:
       context: ./requirements/wordpress
@@ -40,8 +41,6 @@ services:
       - my-net
     volumes:
       - wordpress:/var/www/wordpress
-    expose:
-      - 9000
     depends_on:
       - mariadb
     env_file:
@@ -49,18 +48,18 @@ services:
     restart: on-failure
   # ******* BONUS *******
   redis:
+    image: redis
     container_name: redis
     build:
       context: ./requirements/bonus/redis
       dockerfile: Dockerfile
     networks:
       - my-net
-    expose:
-      - 6379
     env_file:
       - .env
     restart: on-failure
   ftp:
+    image: ftp
     container_name: ftp
     build:
       context: ./requirements/bonus/ftp
@@ -71,11 +70,11 @@ services:
       - wordpress:/var/www/wordpress
     ports:
       - "21:21"
-      # - "40000-40100:40000-40100"
     env_file:
       - .env
     restart: on-failure
   static_website:
+    image: static_website
     container_name: static_website
     build:
       context: ./requirements/bonus/static_website
@@ -85,6 +84,33 @@ services:
     env_file:
       - .env
     restart: on-failure
+  adminer:
+    image: adminer
+    container_name: adminer
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - my-net
+    env_file:
+      - .env
+    restart: on-failure
+  cadvisor:
+    image: cadvisor
+    container_name: cadvisor
+    build:
+      context: ./requirements/bonus/cadvisor
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8080
+    volumes:
+      - /:/rootfs
+      - /var/run:/var/run
+      - /sys:/sys
+      - /var/lib/docker:/var/lib/docker
+    restart: always
 
 volumes:
   mariadb:
@@ -103,4 +129,3 @@ volumes:
 networks:
   my-net:
     driver: bridge
-
